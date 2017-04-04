@@ -9,7 +9,8 @@ func TestHex(t *testing.T) {
 		src     string
 		r, g, b uint16
 	}{
-		{"9f3", 153, 255, 51},
+		{"#9f3", 153, 255, 51},
+		{"#A94FD3", 169, 79, 211},
 	}
 	for _, s := range sample {
 		v, err := Hex(s.src)

@@ -62,3 +62,10 @@ func Hex(src string) (*Value, error) {
 	v.B = uint16(b)
 	return v, nil
 }
+
+func (v *Value) HexString() string {
+	r := strconv.FormatUint(uint64(v.R), 16)
+	g := strconv.FormatUint(uint64(v.G), 16)
+	b := strconv.FormatUint(uint64(v.B), 16)
+	return "#" + r + g + b
+}

@@ -3,6 +3,7 @@ package themes
 import (
 	"github.com/gernest/cute/colors"
 	"github.com/gernest/cute/style"
+	"github.com/gernest/cute/typography"
 )
 
 var (
@@ -140,13 +141,32 @@ type Manager struct {
 	overlay              Overlay
 }
 
+// NewManager returns a new theme manager
+func NewManager(theme Theme) Manager {
+	s := theme.Spacings()
+	m := Manager{
+		appBar: AppBar{
+			Color:           theme.Primary1Color(),
+			TextColor:       theme.AlternateTextColor(),
+			Height:          s[style.DesktopKeyIncrement],
+			TitleFontWeight: typography.FontWeightNormal,
+			Padding:         s[style.DesktopGutter],
+		},
+		avatar: Avatar{
+			Color: theme.CanvasColor(),
+		},
+	}
+
+	return m
+}
+
 // AppBar AppBar style
 type AppBar struct {
 	Color           colors.Color
 	TextColor       colors.Color
-	Height          style.Space
-	TitleFontWeight string
-	Padding         style.Space
+	Height          int
+	TitleFontWeight int
+	Padding         int
 }
 
 // Avatar Avatar style

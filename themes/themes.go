@@ -12,96 +12,96 @@ var (
 
 //Theme defines material theme
 type Theme interface {
-	Primary1Color() colors.Color
-	Primary2Color() colors.Color
-	Primary3Color() colors.Color
-	Accent1Color() colors.Color
-	Accent2Color() colors.Color
-	Accent3Color() colors.Color
-	TextColor() colors.Color
-	SecondaryTextColor() colors.Color
-	AlternateTextColor() colors.Color
-	CanvasColor() colors.Color
-	DisableColor() colors.Color
-	PickerHeaderColor() colors.Color
-	ClockCircleColor() colors.Color
-	ShadowColor() colors.Color
+	Primary1Color() colors.Value
+	Primary2Color() colors.Value
+	Primary3Color() colors.Value
+	Accent1Color() colors.Value
+	Accent2Color() colors.Value
+	Accent3Color() colors.Value
+	TextColor() colors.Value
+	SecondaryTextColor() colors.Value
+	AlternateTextColor() colors.Value
+	CanvasColor() colors.Value
+	DisableColor() colors.Value
+	PickerHeaderColor() colors.Value
+	ClockCircleColor() colors.Value
+	ShadowColor() colors.Value
 	Style() style.Object
 	Spacings() style.SpaceMap
 }
 
 type baseTheme struct {
-	primary1Color      colors.Color
-	primary2Color      colors.Color
-	primary3Color      colors.Color
-	accent1Color       colors.Color
-	accent2Color       colors.Color
-	accent3Color       colors.Color
-	textColor          colors.Color
-	secondaryTextColor colors.Color
-	alternateTextColor colors.Color
-	canvasColor        colors.Color
-	borderColor        colors.Color
-	disabledColor      colors.Color
-	pickerHeaderColor  colors.Color
-	clockCircleColor   colors.Color
-	shadowColor        colors.Color
+	primary1Color      colors.Value
+	primary2Color      colors.Value
+	primary3Color      colors.Value
+	accent1Color       colors.Value
+	accent2Color       colors.Value
+	accent3Color       colors.Value
+	textColor          colors.Value
+	secondaryTextColor colors.Value
+	alternateTextColor colors.Value
+	canvasColor        colors.Value
+	borderColor        colors.Value
+	disabledColor      colors.Value
+	pickerHeaderColor  colors.Value
+	clockCircleColor   colors.Value
+	shadowColor        colors.Value
 	style              style.Object
 	spacings           style.SpaceMap
 }
 
-func (b baseTheme) Primary1Color() colors.Color {
+func (b baseTheme) Primary1Color() colors.Value {
 	return b.primary1Color
 }
 
-func (b baseTheme) Primary2Color() colors.Color {
+func (b baseTheme) Primary2Color() colors.Value {
 	return b.primary2Color
 }
 
-func (b baseTheme) Primary3Color() colors.Color {
+func (b baseTheme) Primary3Color() colors.Value {
 	return b.primary3Color
 }
 
-func (b baseTheme) Accent1Color() colors.Color {
+func (b baseTheme) Accent1Color() colors.Value {
 	return b.accent1Color
 }
 
-func (b baseTheme) Accent2Color() colors.Color {
+func (b baseTheme) Accent2Color() colors.Value {
 	return b.accent2Color
 }
 
-func (b baseTheme) Accent3Color() colors.Color {
+func (b baseTheme) Accent3Color() colors.Value {
 	return b.accent2Color
 }
 
-func (b baseTheme) TextColor() colors.Color {
+func (b baseTheme) TextColor() colors.Value {
 	return b.textColor
 }
 
-func (b baseTheme) SecondaryTextColor() colors.Color {
+func (b baseTheme) SecondaryTextColor() colors.Value {
 	return b.secondaryTextColor
 }
 
-func (b baseTheme) AlternateTextColor() colors.Color {
+func (b baseTheme) AlternateTextColor() colors.Value {
 	return b.alternateTextColor
 }
 
-func (b baseTheme) CanvasColor() colors.Color {
+func (b baseTheme) CanvasColor() colors.Value {
 	return b.canvasColor
 }
 
-func (b baseTheme) DisableColor() colors.Color {
+func (b baseTheme) DisableColor() colors.Value {
 	return b.disabledColor
 }
 
-func (b baseTheme) PickerHeaderColor() colors.Color {
+func (b baseTheme) PickerHeaderColor() colors.Value {
 	return b.pickerHeaderColor
 }
 
-func (b baseTheme) ClockCircleColor() colors.Color {
+func (b baseTheme) ClockCircleColor() colors.Value {
 	return b.clockCircleColor
 }
-func (b baseTheme) ShadowColor() colors.Color {
+func (b baseTheme) ShadowColor() colors.Value {
 	return b.shadowColor
 }
 
@@ -153,7 +153,17 @@ func NewManager(theme Theme) Manager {
 			Padding:         s[style.DesktopGutter],
 		},
 		avatar: Avatar{
-			Color: theme.CanvasColor(),
+			Color:           theme.CanvasColor(),
+			BackgroundColor: theme.CanvasColor().Emphasize(0.26),
+		},
+		badge: Badge{
+			Color:              theme.AlternateTextColor(),
+			TextColor:          theme.TextColor(),
+			PrimaryColor:       theme.Primary1Color(),
+			PrimaryTextColor:   theme.AlternateTextColor(),
+			SecondaryColor:     theme.Accent1Color(),
+			SecondaryTextColor: theme.AlternateTextColor(),
+			FontWeight:         typography.FontWeightMedium,
 		},
 	}
 
@@ -162,8 +172,8 @@ func NewManager(theme Theme) Manager {
 
 // AppBar AppBar style
 type AppBar struct {
-	Color           colors.Color
-	TextColor       colors.Color
+	Color           colors.Value
+	TextColor       colors.Value
 	Height          int
 	TitleFontWeight int
 	Padding         int
@@ -171,26 +181,26 @@ type AppBar struct {
 
 // Avatar Avatar style
 type Avatar struct {
-	Color           colors.Color
-	BackgroundColor colors.Color
+	Color           colors.Value
+	BackgroundColor colors.Value
 }
 
 // Badge badge style
 type Badge struct {
-	Color              colors.Color
-	TextColor          colors.Color
-	PrimaryColor       colors.Color
-	PrimaryTextColor   colors.Color
-	SecondaryColor     colors.Color
-	SecondaryTextColor colors.Color
-	FontWeight         string
+	Color              colors.Value
+	TextColor          colors.Value
+	PrimaryColor       colors.Value
+	PrimaryTextColor   colors.Value
+	SecondaryColor     colors.Value
+	SecondaryTextColor colors.Value
+	FontWeight         int
 }
 
 // BottomNav Bottom Navigation style
 type BottomNav struct {
-	BackgroundColor    colors.Color
-	UnselectedColor    colors.Color
-	SelectedColor      colors.Color
+	BackgroundColor    colors.Value
+	UnselectedColor    colors.Value
+	SelectedColor      colors.Value
 	Height             int
 	UnselectedFontSize int
 	SelectedFontSize   int
@@ -205,38 +215,38 @@ type Button struct {
 
 // Card Button style
 type Card struct {
-	TitleColor    colors.Color
-	SubtitleColor colors.Color
+	TitleColor    colors.Value
+	SubtitleColor colors.Value
 	FontWeight    int
 }
 
 // CardMedia Button style
 type CardMedia struct {
-	Color         colors.Color
-	TitleColor    colors.Color
-	SubtitleColor colors.Color
+	Color         colors.Value
+	TitleColor    colors.Value
+	SubtitleColor colors.Value
 }
 
 // CheckBox Button style
 type CheckBox struct {
-	BoxColor           colors.Color
-	CheckedColor       colors.Color
-	RequiredColor      colors.Color
-	DisabledColor      colors.Color
-	LabelColor         colors.Color
-	LabelDisabledColor colors.Color
+	BoxColor           colors.Value
+	CheckedColor       colors.Value
+	RequiredColor      colors.Value
+	DisabledColor      colors.Value
+	LabelColor         colors.Value
+	LabelDisabledColor colors.Value
 }
 
 // CardText Button style
 type CardText struct {
-	TextColor colors.Color
+	TextColor colors.Value
 }
 
 // Chip Button style
 type Chip struct {
-	BackgroundColor colors.Color
-	DeleteIconColor colors.Color
-	TextColor       colors.Color
+	BackgroundColor colors.Value
+	DeleteIconColor colors.Value
+	TextColor       colors.Value
 	FontSize        int
 	FontWeight      int
 	Shadow          string
@@ -244,111 +254,111 @@ type Chip struct {
 
 // DatePicker Button style
 type DatePicker struct {
-	Color                       colors.Color
-	TextColor                   colors.Color
-	CalendarTextColor           colors.Color
-	SelectColor                 colors.Color
-	SelectTextColor             colors.Color
-	CalendarYearBackgroundColor colors.Color
+	Color                       colors.Value
+	TextColor                   colors.Value
+	CalendarTextColor           colors.Value
+	SelectColor                 colors.Value
+	SelectTextColor             colors.Value
+	CalendarYearBackgroundColor colors.Value
 }
 
 // Dialog Button style
 type Dialog struct {
 	TitleFontSize int
 	BodyFontSize  int
-	BodyColor     colors.Color
+	BodyColor     colors.Value
 }
 
 // FlatButton Button style
 type FlatButton struct {
-	Color              colors.Color
-	ButtonFilterColor  colors.Color
-	DisabledTextColor  colors.Color
-	TextColor          colors.Color
-	PrimaryTextColor   colors.Color
-	SecondaryTextColor colors.Color
+	Color              colors.Value
+	ButtonFilterColor  colors.Value
+	DisabledTextColor  colors.Value
+	TextColor          colors.Value
+	PrimaryTextColor   colors.Value
+	SecondaryTextColor colors.Value
 	FontSize           int
 	FontWeight         int
 }
 
 // DropDownMenu Button style
 type DropDownMenu struct {
-	AccentColor colors.Color
+	AccentColor colors.Value
 }
 
 // EnhancedButton Button style
 type EnhancedButton struct {
-	TapHighlightColor colors.Color
+	TapHighlightColor colors.Value
 }
 
 // FloatingActionButton Button style
 type FloatingActionButton struct {
 	ButtonSize         int
 	MiniSize           int
-	Color              colors.Color
-	IconColor          colors.Color
-	SecondaryColor     colors.Color
-	SecondaryIconColor colors.Color
-	DisabledTextColor  colors.Color
-	DisabledColor      colors.Color
+	Color              colors.Value
+	IconColor          colors.Value
+	SecondaryColor     colors.Value
+	SecondaryIconColor colors.Value
+	DisabledTextColor  colors.Value
+	DisabledColor      colors.Value
 }
 
 // GridTitle Button style
 type GridTitle struct {
-	TextColor colors.Color
+	TextColor colors.Value
 }
 
 // Icon Button style
 type Icon struct {
-	Color           colors.Color
-	BackgroundColor colors.Color
+	Color           colors.Value
+	BackgroundColor colors.Value
 }
 
 // InkBar Button style
 type InkBar struct {
-	BackgroundColor colors.Color
+	BackgroundColor colors.Value
 }
 
 // Drawer Button style
 type Drawer struct {
-	Color colors.Color
+	Color colors.Value
 	Width style.Space
 }
 
 // ListItem Button style
 type ListItem struct {
 	NestedLevelDepth   int
-	SecondaryTextColor colors.Color
-	LeftIconColor      colors.Color
-	RightIconColor     colors.Color
+	SecondaryTextColor colors.Value
+	LeftIconColor      colors.Value
+	RightIconColor     colors.Value
 }
 
 // Menu Button style
 type Menu struct {
-	BackgroundColor          colors.Color
-	ContainerBackgroundColor colors.Color
+	BackgroundColor          colors.Value
+	ContainerBackgroundColor colors.Value
 }
 
 // MenuItem Button style
 type MenuItem struct {
 	DataHeight           style.Space
 	Height               style.Space
-	HoverColor           colors.Color
+	HoverColor           colors.Value
 	Padding              style.Space
-	SelectedTextColor    colors.Color
-	RightIconDesktopFill colors.Color
+	SelectedTextColor    colors.Value
+	RightIconDesktopFill colors.Value
 }
 
 // MenuSubHeader Button style
 type MenuSubHeader struct {
 	Padding     style.Space
-	BorderColor colors.Color
-	TextColor   colors.Color
+	BorderColor colors.Value
+	TextColor   colors.Value
 }
 
 // Overlay Button style
 type Overlay struct {
-	BackgroundColor colors.Color
+	BackgroundColor colors.Value
 }
 
 // AppBar returns the AppBar

@@ -34,3 +34,29 @@ func TestHex(t *testing.T) {
 	}
 
 }
+
+func TestValue_Luminance(t *testing.T) {
+
+	sample := []struct {
+		src string
+		e   float64
+	}{
+		{"rgb(0, 0, 0)", 0},
+		{"rgb(255, 255, 255)", 1},
+		{"rgb(127, 127, 127)", 0.212},
+		{"rgb(255, 127, 0)", 0.364},
+	}
+
+	for _, s := range sample {
+		v, err := Parse(s.src)
+		if err != nil {
+			t.Fatal(err)
+		}
+		// fmt.Println(*v)
+		g := v.Luminance()
+		if g != s.e {
+			t.Errorf("expected %.3f got %.3f", s.e, g)
+		}
+	}
+
+}

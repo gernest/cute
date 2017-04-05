@@ -8,9 +8,10 @@ func TestHex(t *testing.T) {
 	sample := []struct {
 		src     string
 		r, g, b uint16
+		rgb     string
 	}{
-		{"#9f3", 153, 255, 51},
-		{"#A94FD3", 169, 79, 211},
+		{"#9f3", 153, 255, 51, "rgb(153,255,51)"},
+		{"#A94FD3", 169, 79, 211, "rgb(169,79,211)"},
 	}
 	for _, s := range sample {
 		v, err := Hex(s.src)
@@ -25,6 +26,10 @@ func TestHex(t *testing.T) {
 		}
 		if v.B != s.b {
 			t.Errorf("expected %d got %d", s.b, v.B)
+		}
+		ss := v.String()
+		if ss != s.rgb {
+			t.Errorf("expected %s got %s", s.rgb, ss)
 		}
 	}
 

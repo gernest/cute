@@ -102,6 +102,10 @@ func (s SpaceMap) Merge(m SpaceMap) {
 		s[k] = v
 	}
 }
+func (s SpaceMap) Get(k Space) string {
+	return strconv.FormatInt(int64(s[k]), 10)
+
+}
 
 // DefaultSpacing returns a map of default space settings
 func DefaultSpacing() SpaceMap {

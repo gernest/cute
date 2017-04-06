@@ -21,7 +21,7 @@ type appBarStyle struct {
 func newStyle(base themes.AppBar) appBarStyle {
 	root := make(style.Object)
 	root.Set("position", "relative")
-	root.Set("z-ndex", style.AppBar.String())
+	root.Set("z-index", style.AppBar.String())
 	root.Set("width", "100%")
 	root.Set("display", "flex")
 	root.Set("background-color", base.Color.String())

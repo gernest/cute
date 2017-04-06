@@ -52,8 +52,19 @@ func itos(i int) string {
 
 type AppBar struct {
 	vecty.Core
-	style appBarStyle
-	title *Title
+	Style               appBarStyle
+	Title               *Title
+	ClassName           string
+	IconClassNameLeft   string
+	IconClassNameRight  string
+	IconElementLeft     vecty.Component
+	IconElementRight    vecty.Component
+	IconStyleLeft       style.Object
+	IconStyleRight      style.Object
+	OnRightIconTouchTap func(*vecty.Event)
+	OnTitleTouchTap     func(*vecty.Event)
+	ShowMenuIconButton  bool
+	TitleStyle          style.Object
 }
 
 type Title struct {
@@ -68,27 +79,33 @@ type Opts struct {
 
 func New(o Opts) *AppBar {
 	a := &AppBar{
-		style: newStyle(o.Theme),
-		title: &o.Title,
+		Style: newStyle(o.Theme),
+		Title: &o.Title,
 	}
 	return a
 }
 
 func (a *AppBar) Render() *vecty.HTML {
 	var title *vecty.HTML
-	if a.title.Component != nil {
+	var titleStyle style.Object
+	if a.TitleStyle != nil {
+		titleStyle = a.TitleStyle
+	} else {
+		titleStyle = a.Style.title
+	}
+	if a.Title.Component != nil {
 		title = elem.Div(
-			a.style.title.Style(),
-			a.title.Component,
+			titleStyle.Style(),
+			a.Title.Component,
 		)
 	} else {
 		title = elem.Heading1(
-			a.style.title.Style(),
-			vecty.Text(a.title.Text),
+			titleStyle.Style(),
+			vecty.Text(a.Title.Text),
 		)
 	}
 	return elem.Div(
-		a.style.root.Style(),
+		a.Style.root.Style(),
 		title,
 	)
 }

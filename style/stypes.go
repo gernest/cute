@@ -1,5 +1,8 @@
 package style
 
+import "strconv"
+import "github.com/gopherjs/vecty"
+
 // ZIndex css zindex value
 type ZIndex int
 
@@ -16,6 +19,10 @@ const (
 	SnackBar      ZIndex = 2900
 	ToolTip       ZIndex = 3000
 )
+
+func (z ZIndex) String() string {
+	return strconv.FormatInt(int64(z), 10)
+}
 
 // Space css spacing
 type Space int
@@ -65,6 +72,25 @@ func (s Space) String() string {
 
 // Object defines a group of key value pairs of css styles
 type Object map[string]string
+
+func (o Object) Set(k, v string) {
+	o[k] = v
+}
+
+type markList []vecty.Markup
+
+func (m markList) Apply(h *vecty.HTML) {
+	for _, f := range m {
+		f.Apply(h)
+	}
+}
+func (o Object) Style() vecty.Markup {
+	var m []vecty.Markup
+	for k, v := range o {
+		m = append(m, vecty.Style(k, v))
+	}
+	return markList(m)
+}
 
 // SpaceMap stores the spacing settings. Keys should be the the Space constants
 // defined above

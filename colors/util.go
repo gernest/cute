@@ -3,8 +3,11 @@ package colors
 import (
 	"errors"
 	"math"
+	"strconv"
 
 	"fmt"
+
+	"strings"
 
 	colorful "github.com/lucasb-eyer/go-colorful"
 )
@@ -12,6 +15,7 @@ import (
 type Value struct {
 	Type string
 	colorful.Color
+	A float64
 }
 
 func New(c Color) Value {
@@ -28,7 +32,20 @@ func Parse(src string) (Value, error) {
 		return Value{}, errors.New("empty color")
 	}
 	if src[0] != '#' {
-		return Value{}, errors.New("only hex colors are supported")
+		i := strings.Index(src, "(")
+		if i == -1 {
+			return Value{}, errors.New("bad value")
+		}
+		typ := src[:i]
+		switch typ {
+		case "rgb":
+			p := parts(src[i:])
+			return Value{Type: "rgb", Color: colorful.Color{R: p[0], G: p[1], B: p[2]}}, nil
+		case "rgba":
+			p := parts(src[i:])
+			return Value{Type: "rgb", Color: colorful.Color{R: p[0], G: p[1], B: p[2]}, A: p[3]}, nil
+		}
+		return Value{}, errors.New("unsupported type")
 
 	}
 	c, err := colorful.Hex(src)
@@ -36,6 +53,21 @@ func Parse(src string) (Value, error) {
 		return Value{}, err
 	}
 	return Value{Type: "rgb", Color: c}, nil
+}
+
+func parts(src string) []float64 {
+	src = strings.TrimPrefix(src, "(")
+	src = strings.TrimSuffix(src, ")")
+	p := strings.Split(src, ",")
+	e := make([]float64, len(p))
+	for i, v := range p {
+		f, err := strconv.ParseFloat(strings.TrimSpace(v), 64)
+		if err != nil {
+			panic(err)
+		}
+		e[i] = f
+	}
+	return e
 }
 
 func (v *Value) Luminance() float64 {
@@ -93,6 +125,9 @@ func (v Value) Lighten(coe float64) Value {
 
 func (v Value) String() string {
 	r, g, b := v.RGB255()
+	if v.Type == "rgba" {
+		return fmt.Sprintf("%s(%d,%d,%d,%.3f)", v.Type, r, g, b, v.A)
+	}
 	return fmt.Sprintf("%s(%d,%d,%d)", v.Type, r, g, b)
 }
 
@@ -110,5 +145,4 @@ func (v Value) Fade(val float64) Value {
 	n.Type += "a"
 	n.B = c
 	return n
-
 }

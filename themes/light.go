@@ -2,6 +2,7 @@ package themes
 
 import (
 	"github.com/gernest/cute/colors"
+	"github.com/gernest/cute/style"
 )
 
 type Light struct {
@@ -9,6 +10,7 @@ type Light struct {
 }
 
 func NewLight() Light {
+	s := style.DefaultSpacing()
 	b := baseTheme{
 		primary1Color:      colors.New(colors.Cyan500),
 		primary2Color:      colors.New(colors.Cyan700),
@@ -25,6 +27,7 @@ func NewLight() Light {
 		pickerHeaderColor:  colors.New(colors.Cyan500),
 		clockCircleColor:   colors.New(colors.DarkBlack).Fade(0.07),
 		shadowColor:        colors.New(colors.FullBlack),
+		spacings:           s,
 	}
 	return Light{baseTheme: b}
 }

@@ -3,6 +3,7 @@ package appbar
 import (
 	"strconv"
 
+	"github.com/gernest/cute/components/paper"
 	"github.com/gernest/cute/style"
 	"github.com/gernest/cute/themes"
 	"github.com/gopherjs/vecty"
@@ -18,7 +19,8 @@ type appBarStyle struct {
 	flatButton          style.Object
 }
 
-func newStyle(base themes.AppBar) appBarStyle {
+func newStyle(t themes.Manager) appBarStyle {
+	base := t.AppBar()
 	root := make(style.Object)
 	root.Set("position", "relative")
 	root.Set("z-index", style.AppBar.String())
@@ -65,6 +67,7 @@ type AppBar struct {
 	OnTitleTouchTap     func(*vecty.Event)
 	ShowMenuIconButton  bool
 	TitleStyle          style.Object
+	theme               themes.Manager
 }
 
 type Title struct {
@@ -73,7 +76,7 @@ type Title struct {
 }
 
 type Opts struct {
-	Theme themes.AppBar
+	Theme themes.Manager
 	Title Title
 }
 
@@ -81,6 +84,7 @@ func New(o Opts) *AppBar {
 	a := &AppBar{
 		Style: newStyle(o.Theme),
 		Title: &o.Title,
+		theme: o.Theme,
 	}
 	return a
 }
@@ -104,7 +108,9 @@ func (a *AppBar) Render() *vecty.HTML {
 			vecty.Text(a.Title.Text),
 		)
 	}
+	p := paper.New(a.theme, paper.Opts{Rounded: true})
 	return elem.Div(
+		p,
 		a.Style.root.Style(),
 		title,
 	)

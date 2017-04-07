@@ -15,7 +15,7 @@ func main() {
 
 }
 
-func createAppBar(t themes.AppBar) *appbar.AppBar {
+func createAppBar(t themes.Manager) *appbar.AppBar {
 	o := appbar.Opts{
 		Theme: t,
 		Title: appbar.Title{Text: "genesis"},
@@ -30,6 +30,6 @@ type app struct {
 
 func (a *app) Render() *vecty.HTML {
 	return elem.Body(
-		createAppBar(a.theme.AppBar()),
+		createAppBar(a.theme),
 	)
 }

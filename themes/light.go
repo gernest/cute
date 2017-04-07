@@ -10,6 +10,9 @@ type Light struct {
 }
 
 func NewLight() Light {
+	o := make(style.Object)
+	o.Set("font-family", "Roboto, sans-serif")
+	o.Set("border-radius", "2")
 	s := style.DefaultSpacing()
 	b := baseTheme{
 		primary1Color:      colors.New(colors.Cyan500),
@@ -28,6 +31,7 @@ func NewLight() Light {
 		clockCircleColor:   colors.New(colors.DarkBlack).Fade(0.07),
 		shadowColor:        colors.New(colors.FullBlack),
 		spacings:           s,
+		style:              o,
 	}
 	return Light{baseTheme: b}
 }

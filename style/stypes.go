@@ -77,6 +77,11 @@ type Object map[string]string
 func (o Object) Set(k, v string) {
 	o[k] = v
 }
+func (o Object) Merge(n Object) {
+	for k, v := range n {
+		o.Set(k, v)
+	}
+}
 
 type markList []vecty.Markup
 

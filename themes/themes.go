@@ -114,7 +114,7 @@ func (b baseTheme) Spacings() style.SpaceMap {
 
 // Manager is a theme Manager
 type Manager struct {
-	baseTheme
+	Theme
 	appBar               AppBar
 	avatar               Avatar
 	badge                Badge
@@ -139,12 +139,14 @@ type Manager struct {
 	menuItem             MenuItem
 	menuSubHeader        MenuSubHeader
 	overlay              Overlay
+	paper                Paper
 }
 
 // NewManager returns a new theme manager
 func NewManager(theme Theme) Manager {
 	s := theme.Spacings()
 	m := Manager{
+		Theme: theme,
 		appBar: AppBar{
 			Color:           theme.Primary1Color(),
 			TextColor:       theme.AlternateTextColor(),
@@ -361,6 +363,11 @@ type Overlay struct {
 	BackgroundColor colors.Value
 }
 
+type Paper struct {
+	Color           colors.Value
+	BackgroundColor colors.Value
+}
+
 // AppBar returns the AppBar
 func (m Manager) AppBar() AppBar {
 	return m.appBar
@@ -474,4 +481,8 @@ func (m Manager) MenuSubHeader() MenuSubHeader {
 // Overlay returns Overlay
 func (m Manager) Overlay() Overlay {
 	return m.overlay
+}
+
+func (m Manager) Paper() Paper {
+	return m.paper
 }

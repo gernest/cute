@@ -1,4 +1,4 @@
-package fonticon
+package icon
 
 import (
 	"strconv"
@@ -11,7 +11,7 @@ import (
 	"github.com/gopherjs/vecty/event"
 )
 
-type FontIcon struct {
+type Font struct {
 	vecty.Core
 	Color        *colors.Value
 	HoverColor   colors.Value
@@ -23,20 +23,20 @@ type FontIcon struct {
 	offColor     colors.Value
 }
 
-func New(t themes.Manager) *FontIcon {
+func NewFont(t themes.Manager) *Font {
 	s := make(style.Object)
 	p := t.Spacings()
 	s.Set("position", "relative")
 	s.Set("font-size", p.Get(style.IconSize))
 	s.Set("display", "inline-block")
 	s.Set("user-select", "none")
-	return &FontIcon{root: s, offColor: t.TextColor()}
+	return &Font{root: s, offColor: t.TextColor()}
 }
 func itos(i int) string {
 	return strconv.FormatInt(int64(i), 10)
 }
 
-func (f *FontIcon) Render() *vecty.HTML {
+func (f *Font) Render() *vecty.HTML {
 	if f.hovered {
 		if f.HoverColor.String() == "" {
 			f.root.Set("color", f.offColor.String())
@@ -59,7 +59,7 @@ func (f *FontIcon) Render() *vecty.HTML {
 	)
 }
 
-func (f *FontIcon) handleMouseLeave(e *vecty.Event) {
+func (f *Font) handleMouseLeave(e *vecty.Event) {
 	if f.HoverColor.String() == "" {
 		f.hovered = false
 	}
@@ -68,7 +68,7 @@ func (f *FontIcon) handleMouseLeave(e *vecty.Event) {
 	}
 }
 
-func (f *FontIcon) handleMouseEnter(e *vecty.Event) {
+func (f *Font) handleMouseEnter(e *vecty.Event) {
 	if f.HoverColor.String() == "" {
 		f.hovered = false
 	}

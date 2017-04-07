@@ -2,6 +2,7 @@ package style
 
 import "strconv"
 import "github.com/gopherjs/vecty"
+import "time"
 
 // ZIndex css zindex value
 type ZIndex int
@@ -127,3 +128,21 @@ func DefaultSpacing() SpaceMap {
 const (
 	CSSColor = "color"
 )
+
+const (
+	EaseOutFunction   = "cubic-bezier(0.23, 1, 0.32, 1)"
+	EaseInOutFunction = "cubic-bezier(0.445, 0.05, 0.55, 0.95)"
+)
+
+func Create(duration, delay time.Duration, property, easeFunc string) string {
+	return property + " " + mili(duration) + " " + easeFunc + " " + mili(delay)
+}
+
+func mili(d time.Duration) string {
+	n := int64(d / time.Millisecond)
+	return strconv.FormatInt(n, 10) + "ms"
+}
+
+func EaseOut(duration, delay time.Duration, property string) string {
+	return Create(duration, delay, property, EaseOutFunction)
+}

@@ -143,6 +143,6 @@ func (v Value) Fade(val float64) Value {
 	n := v
 	c := clamp(val, 0, 1)
 	n.Type += "a"
-	n.B = c
+	n.A = c
 	return n
 }

@@ -140,6 +140,7 @@ type Manager struct {
 	menuSubHeader        MenuSubHeader
 	overlay              Overlay
 	paper                Paper
+	subHeader            SubHeader
 }
 
 // NewManager returns a new theme manager
@@ -166,6 +167,10 @@ func NewManager(theme Theme) Manager {
 			SecondaryColor:     theme.Accent1Color(),
 			SecondaryTextColor: theme.AlternateTextColor(),
 			FontWeight:         typography.FontWeightMedium,
+		},
+		subHeader: SubHeader{
+			Color:      theme.TextColor().Fade(0.54),
+			FontWeight: typography.FontWeightMedium,
 		},
 	}
 
@@ -368,6 +373,11 @@ type Paper struct {
 	BackgroundColor colors.Value
 }
 
+type SubHeader struct {
+	Color      colors.Value
+	FontWeight int
+}
+
 // AppBar returns the AppBar
 func (m Manager) AppBar() AppBar {
 	return m.appBar
@@ -485,4 +495,7 @@ func (m Manager) Overlay() Overlay {
 
 func (m Manager) Paper() Paper {
 	return m.paper
+}
+func (m Manager) SubHeader() SubHeader {
+	return m.subHeader
 }

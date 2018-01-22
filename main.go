@@ -2,6 +2,7 @@ package main
 
 import (
 	"github.com/gernest/cute/components/appbar"
+	"github.com/gernest/cute/components/subheader"
 	"github.com/gernest/cute/themes"
 	"github.com/gopherjs/vecty"
 	"github.com/gopherjs/vecty/elem"
@@ -29,7 +30,11 @@ type app struct {
 }
 
 func (a *app) Render() vecty.ComponentOrHTML {
+	sh := subheader.New(a.theme, true)
+	sh.Children = vecty.Text("This is a subheader")
+
 	return elem.Body(
 		createAppBar(a.theme),
+		sh,
 	)
 }

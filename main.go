@@ -28,7 +28,7 @@ type app struct {
 	theme themes.Manager
 }
 
-func (a *app) Render() *vecty.HTML {
+func (a *app) Render() vecty.ComponentOrHTML {
 	return elem.Body(
 		createAppBar(a.theme),
 	)

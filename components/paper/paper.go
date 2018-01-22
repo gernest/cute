@@ -11,7 +11,7 @@ import (
 
 type Paper struct {
 	vecty.Core
-	Children          vecty.Component
+	Children          vecty.MarkupOrChild
 	Circle            bool
 	Rounded           bool
 	TransitionEnabled bool
@@ -21,9 +21,9 @@ type Paper struct {
 }
 
 type Opts struct {
-	EnableTrasition bool
-	Circle          bool
-	Rounded         bool
+	EnableTransition bool
+	Circle           bool
+	Rounded          bool
 }
 
 func New(t themes.Manager, o Opts) *Paper {
@@ -31,7 +31,7 @@ func New(t themes.Manager, o Opts) *Paper {
 	r := make(style.Object)
 	s := t.Style()
 	r.Set("color", p.Color.String())
-	if o.EnableTrasition {
+	if o.EnableTransition {
 		r.Set("transition", style.EaseOut(450*time.Millisecond, 0*time.Millisecond, "all"))
 	}
 	r.Set("box-sizing", "border-box")
@@ -54,12 +54,12 @@ func New(t themes.Manager, o Opts) *Paper {
 	return &Paper{
 		root:              r,
 		Circle:            o.Circle,
-		TransitionEnabled: o.EnableTrasition,
+		TransitionEnabled: o.EnableTransition,
 		Rounded:           o.Rounded,
 	}
 }
 
-func (p *Paper) Render() *vecty.HTML {
+func (p *Paper) Render() vecty.ComponentOrHTML {
 	if p.Style != nil {
 		p.root.Merge(p.Style)
 	}

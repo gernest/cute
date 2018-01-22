@@ -36,7 +36,7 @@ func itos(i int) string {
 	return strconv.FormatInt(int64(i), 10)
 }
 
-func (f *Font) Render() *vecty.HTML {
+func (f *Font) Render() vecty.ComponentOrHTML {
 	if f.hovered {
 		if f.HoverColor.String() == "" {
 			f.root.Set("color", f.offColor.String())
@@ -53,9 +53,11 @@ func (f *Font) Render() *vecty.HTML {
 		styles = f.root
 	}
 	return elem.Span(
-		styles,
-		event.MouseLeave(f.handleMouseLeave),
-		event.MouseEnter(f.handleMouseEnter),
+		vecty.Markup(
+			styles.Style(),
+			event.MouseLeave(f.handleMouseLeave),
+			event.MouseEnter(f.handleMouseEnter),
+		),
 	)
 }
 

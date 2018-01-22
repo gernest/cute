@@ -89,7 +89,7 @@ func New(o Opts) *AppBar {
 	return a
 }
 
-func (a *AppBar) Render() *vecty.HTML {
+func (a *AppBar) Render() vecty.ComponentOrHTML {
 	var title *vecty.HTML
 	var titleStyle style.Object
 	if a.TitleStyle != nil {

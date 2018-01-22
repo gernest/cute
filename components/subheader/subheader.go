@@ -11,7 +11,7 @@ import (
 
 type SubHeader struct {
 	vecty.Core
-	Children vecty.Component
+	Children vecty.MarkupOrChild
 	Inset    bool
 	Style    style.Object
 	root     style.Object
@@ -41,7 +41,7 @@ func itos(i int) string {
 	return strconv.FormatInt(int64(i), 10)
 }
 
-func (s *SubHeader) Render() *vecty.HTML {
+func (s *SubHeader) Render() vecty.ComponentOrHTML {
 	if s.Style != nil {
 		s.root.Merge(s.Style)
 	}

@@ -83,19 +83,12 @@ func (o Object) Merge(n Object) {
 	}
 }
 
-type markList []vecty.Markup
-
-func (m markList) Apply(h *vecty.HTML) {
-	for _, f := range m {
-		f.Apply(h)
-	}
-}
-func (o Object) Style() vecty.Markup {
-	var m []vecty.Markup
+func (o Object) Style() vecty.MarkupList {
+	var m []vecty.Applyer
 	for k, v := range o {
 		m = append(m, vecty.Style(k, v))
 	}
-	return markList(m)
+	return vecty.Markup(m...)
 }
 
 // SpaceMap stores the spacing settings. Keys should be the the Space constants
